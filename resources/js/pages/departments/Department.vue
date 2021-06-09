@@ -81,6 +81,7 @@
 			<v-file-input clearable prepend-icon="" prepend-inner-icon="mdi-file" outlined dense v-model="file.data" label="الملف " :rules="[ v => !!v || 'Name is required']" required></v-file-input>
 			<v-select outlined dense v-model="file.type" label="النوع" :items="['صورة','فيديو','ملف']" :rules="[ v => !!v || 'Name is required']" required></v-select>
 		</d-dialog> -->
+		<!-- add pagination on backend -->
 
 		<v-card-actions class="justify-center">
 			<v-pagination></v-pagination>
