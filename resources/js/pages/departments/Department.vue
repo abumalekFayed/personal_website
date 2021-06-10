@@ -17,20 +17,21 @@
 		</v-toolbar>
 
 		<div class="d-flex align-center justify-center flex-wrap" style="gap:10px">
-			<v-card v-for="item in filteredItems" :key="item.id" rounded class="ma-2" @click="$router.push('/departments/'+ item.department_id + '/' + item.id)">
-				<v-card-title v-if="department.file_type=='video'" class="justify-center" style="gap:20px">
+			<v-card style="gap:20px;width:250px" v-for="item in filteredItems" :key="item.id" rounded class="ma-2" @click="$router.push('/departments/'+ item.department_id + '/' + item.id)">
+
+				<v-card-title style="gap:20px" v-if="department.file_type=='video'" class="justify-center pa-0">
 					<div class="video-container">
 						<iframe :src="`https://www.youtube.com/embed/${item.youtube_link}`" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 					</div>
 				</v-card-title>
 
-				<v-card-title v-else class="justify-center" style="gap:20px">
-					<img :src="'/storage/' + item.main_image" width="200" height="120" onerror="this.src='/storage/imgs/bg1.jpg'">
+				<v-card-title v-else class="justify-center pa-0" style="gap:20px">
+					<img :src="'/storage/' + item.main_image" width="250" height="170" onerror="this.src='/storage/imgs/bg1.jpg'">
 				</v-card-title>
 
 				<v-card-text>
 					<h4> {{item.name}} </h4>
-					<small>{{$moment(item.created_at).format('YYYY-MM-DD')}}</small>
+					<small>{{$moment(item.created_at).format('dddd d  MMM  YYYY')}}</small>
 					<div>{{ellipsify(item.description)}}</div>
 					<!-- <p>{{item.description}}</p> -->
 				</v-card-text>
@@ -105,6 +106,7 @@
 
 		created() {
 			this.fetchDepartment();
+			this.$moment().local("ar");
 		},
 
 		computed: {

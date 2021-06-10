@@ -20,9 +20,8 @@ class DepartmentController extends Controller
     public function show(Department $department)
     {
         //todo: add pagination to department items
+
         return $department->load('items');
-        $items = DepartmentItem::where('department_id', $department->id)->paginate(10);
-        $department->items = $items;
     }
 
     public function store()

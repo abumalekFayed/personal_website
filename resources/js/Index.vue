@@ -3,8 +3,12 @@
 
 		<v-app-bar height="60" clipped-left clipped-right dark dense flat app class="pa-0 ma-0 info">
 			<v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-			<router-link style="min-width:300px" class="white--text title" to="/">{{_settings('general').websit_title}}</router-link>
+			<router-link class="white--text title" to="/">{{_settings('general').websit_title}}</router-link>
 			<v-spacer></v-spacer>
+			<span style="min-width:120px">
+				{{$moment().format('dddd d  MMM  YYYY')}}
+
+			</span>
 			<v-progress-circular v-if="$store.state.loading" color="white" indeterminate></v-progress-circular>
 		</v-app-bar>
 

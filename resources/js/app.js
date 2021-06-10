@@ -18,6 +18,13 @@ import auth from "@websanova/vue-auth/dist/v2/vue-auth.esm.js";
 import driverAuthBearer from "@websanova/vue-auth/dist/drivers/auth/bearer.esm.js";
 import driverHttpAxios from "@websanova/vue-auth/dist/drivers/http/axios.1.x.esm.js";
 import driverRouterVueRouter from "@websanova/vue-auth/dist/drivers/router/vue-router.2.x.esm.js";
+import VueMoment from "vue-moment";
+const moment = require("moment");
+require("moment/locale/ar");
+Vue.use(VueMoment, {
+    moment
+});
+
 //import Spotlight from "spotlight";
 //var spotlight = require('spotlight');
 //
@@ -46,7 +53,7 @@ if (token) {
 }
 window.axios = axios;
 
-Vue.use(require("vue-moment"));
+//Vue.use(require("vue-moment"));
 
 Vue.use(auth, {
     plugins: {
