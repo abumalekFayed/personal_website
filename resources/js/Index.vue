@@ -1,6 +1,242 @@
 <template>
     <v-app>
-        <router-view></router-view>
+        <v-card
+            class="overflow-hidden p-0 mb-0"
+            height="100%"
+            min-height="100%"
+        >
+            <v-app-bar
+                absolute
+                color="black"
+                dark
+                shrink-on-scroll
+                prominent
+                :src="require('./assets/download.jpg').default"
+                fade-img-on-scroll
+                scroll-target="#scrolling-techniques-3"
+            >
+                <template v-slot:img="{ props }">
+                    <v-img
+                        v-bind="props"
+                        gradient="to top right, rgba(100,115,201,.1), rgba(25,32,72,.3)"
+                    ></v-img>
+                </template>
+
+                <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+
+                <div style="width:100%;" class="mt-3 mb-3">
+                    <h4 style="width:100%">النائب / خالد العتيبي</h4>
+                    <h6 style="width:100%; font-stretch: ultra-expanded;">
+                        عضو مجلس الأمة الكويتي
+                    </h6>
+                </div>
+
+                <v-spacer></v-spacer>
+                <v-btn icon @click="drawer = !drawer">
+                    <v-icon>mdi-menu</v-icon>
+                </v-btn>
+                <template v-slot:extension>
+                    <v-tabs align-with-title>
+                        <v-tab style="width: 11rem" to="/login2"
+                            >تسجيل الدخول
+                            <v-icon class="mr-3">mdi-login</v-icon>
+                        </v-tab>
+                        <!-- <v-tab style="width: 11rem">Tab 2</v-tab>
+          <v-tab style="width: 11rem">Tab 3</v-tab> -->
+                    </v-tabs>
+                </template>
+            </v-app-bar>
+            <v-sheet
+                id="scrolling-techniques-3"
+                class="overflow-y-auto p-0"
+                max-height="100vh"
+                style="overflow-x: hidden !important"
+            >
+                <v-container fluid style="height: contain; margin-top: 15rem">
+                    <router-view></router-view>
+                    <v-layout row wrap justify-space-between>
+                        <v-flex xs12 md12 lg12>
+                            <v-footer dark padless class="mt-10">
+                                <v-card
+                                    flat
+                                    tile
+                                    width="100%"
+                                    class="blue darken-3 text-center"
+                                >
+                                    <v-card-text>
+                                        <v-btn
+                                            v-for="icon in icons"
+                                            :key="icon"
+                                            class="mx-4"
+                                            icon
+                                            dark
+                                        >
+                                            <v-icon size="24px">
+                                                {{ icon }}
+                                            </v-icon>
+                                        </v-btn>
+                                    </v-card-text>
+
+                                    <v-divider></v-divider>
+
+                                    <v-card-text class="white--text">
+                                        <strong
+                                            >جميع الحقوق محفوظة - النائب / خالد
+                                            العتيبي</strong
+                                        >
+                                        - {{ new Date().getFullYear() }}
+                                    </v-card-text>
+                                </v-card>
+                            </v-footer>
+                        </v-flex>
+                    </v-layout>
+                </v-container>
+                <v-navigation-drawer
+                    dark
+                    fixed
+                    clipped
+                    app
+                    flat
+                    left
+                    v-model="drawer"
+                >
+                    <v-list>
+                        <v-list-item
+                            v-if="$auth.check()"
+                            class="px-2 primary lighten-5"
+                            style="margin-top: -9px;"
+                        >
+                            <v-list-item-avatar>
+                                <v-img src="storage/imgs/logo2.jpg"></v-img>
+                            </v-list-item-avatar>
+                            <v-list-item-content>
+                                <v-list-item-title class="black--text">{{
+                                    $auth.user().name
+                                }}</v-list-item-title>
+                                <v-list-item-subtitle> </v-list-item-subtitle>
+                            </v-list-item-content>
+                            <v-chip
+                                small
+                                color="error"
+                                class="mx-2"
+                                label
+                                v-if="$auth.check()"
+                                @click="logout"
+                                >logout</v-chip
+                            >
+                        </v-list-item>
+                        <template>
+                            <template
+                                v-if="
+                                    $auth.check() &&
+                                        $auth.user().account_state !== 'active'
+                                "
+                            >
+                                <v-list-item
+                                    to="/user-dashboard"
+                                    color="primary"
+                                >
+                                    <v-list-item-icon>
+                                        <v-icon>mdi-view-dashboard</v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-title
+                                        >لوحة التحكم</v-list-item-title
+                                    >
+                                </v-list-item>
+                            </template>
+                            <div v-for="(item, index) in routes" :key="index">
+                                <template v-if="item.children">
+                                    <v-list-group
+                                        v-if="
+                                            $auth.check(
+                                                item.meta
+                                                    ? item.meta.auth.roles
+                                                    : ''
+                                            )
+                                        "
+                                        :group="item.path"
+                                        no-action
+                                        :key="item.name"
+                                        :prepend-icon="item.icon"
+                                        active-class="cls"
+                                    >
+                                        <template v-slot:activator>
+                                            <v-list-item-title
+                                                v-text="
+                                                    item.name
+                                                        .charAt(0)
+                                                        .toUpperCase() +
+                                                        item.name.slice(1)
+                                                "
+                                            ></v-list-item-title>
+                                        </template>
+                                        <template v-for="link in item.children">
+                                            <v-link
+                                                v-if="
+                                                    !link.hide &&
+                                                        $auth.check(
+                                                            link.meta
+                                                                ? link.meta.auth
+                                                                      .roles
+                                                                : ''
+                                                        )
+                                                "
+                                                :key="link.id"
+                                                :tolink="link.path"
+                                                :title="
+                                                    $t(
+                                                        link.label
+                                                            ? link.label
+                                                            : link.name
+                                                    )
+                                                "
+                                            />
+                                        </template>
+                                    </v-list-group>
+                                </template>
+                                <template v-else>
+                                    <v-list-item
+                                        color="indigo"
+                                        :key="index"
+                                        :to="item.path"
+                                        v-if="
+                                            !item.hide &&
+                                                $auth.check(
+                                                    item.meta
+                                                        ? item.meta.auth.roles
+                                                        : ''
+                                                )
+                                        "
+                                    >
+                                        <v-list-item-icon>
+                                            <v-icon>{{ item.icon }}</v-icon>
+                                        </v-list-item-icon>
+                                        <v-list-item-title>{{
+                                            item.name.charAt(0).toUpperCase() +
+                                                item.name.slice(1)
+                                        }}</v-list-item-title>
+                                    </v-list-item>
+                                </template>
+                            </div>
+                        </template>
+                        <v-list-item
+                            v-for="(department, i) in activeDepartments"
+                            :key="'d_' + department.id"
+                            :to="'/departments/' + department.id"
+                            color="primary"
+                        >
+                            <v-list-item-icon>
+                                <v-icon>{{ department.icon }}</v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-title>{{
+                                department.name
+                            }}</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-navigation-drawer>
+            </v-sheet>
+        </v-card>
+
         <!--	<v-app-bar height="60" clipped-left clipped-right dark dense flat app class="pa-0 ma-0 info">
 			<v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 			<router-link class="white--text title" to="/">{{_settings('general').websit_title}}</router-link>
