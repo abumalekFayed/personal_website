@@ -1,3 +1,42 @@
 @import url(https://fonts.googleapis.com/css? family=Oxygen:300,400,700&display=swap);
 @import url(https://fonts.googleapis.com/css? family=Comfortaa&display=swap);
-.invoice-table{border-collapse:collapse}.invoice-table ._input,.invoice-table td,.invoice-table th{padding:5px;border:1px solid #cfcfcf;text-align:center}.chip{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;padding:10px;min-width:100px;border-radius:5px;font-size:23px}.chip span{font-size:16px}.input2{padding:10px;background-color:#f9f9f9;border:1px solid #d4d4d4}
+.invoice-table {
+  border-collapse: collapse;
+}
+
+.invoice-table td,
+.invoice-table th {
+  padding: 5px;
+  border: #cfcfcf 1px solid;
+  text-align: center;
+}
+
+.invoice-table ._input {
+  padding: 5px;
+  border: #cfcfcf 1px solid;
+  text-align: center;
+}
+
+.chip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  min-width: 100px;
+  border-radius: 5px;
+  font-size: 23px;
+}
+
+.chip span {
+  font-size: 16px;
+}
+
+.input2 {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: solid 1px #d4d4d4;
+}
+
+
