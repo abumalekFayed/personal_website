@@ -55,7 +55,14 @@ const routes = [
         path: "/contact-us",
         hide: true,
         name: "contact us",
-        component: loadView("pages/about/ContactUs")
+        component: loadView("pages/contact_us/Add")
+    },
+    {
+        path: "/emails",
+        name: "البريد الوارد",
+        icon: "mdi-cog",
+        component: loadView("pages/contact_us/Index"),
+        meta: { auth: true }
     },
 
     {
@@ -63,7 +70,7 @@ const routes = [
         name: "الاعدادات العامة",
         icon: "mdi-cog",
         component: loadView("pages/settings/Index"),
-        meta: { auth: { roles: ["admin", "/settings"] } }
+        meta: { auth: true }
     },
 
     {

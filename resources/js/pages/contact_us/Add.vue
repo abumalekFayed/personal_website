@@ -47,10 +47,10 @@
 		methods: {
 			saveMessage() {
 				// const data = jsonToFormData(this.item);
-				// this.axios.post("department-item", data).then((res) => {
-				// 	this.department.items.unshift(res.data);
-				// 	this.show_add_item = false;
-				// });
+				this.axios.post("email", this.message).then((res) => {
+					alert("تم ارسال الرسالة بنجاح");
+					this.$router.push("/");
+				});
 			},
 		},
 	};
