@@ -1,22 +1,62 @@
 <template>
     <div>
+        <v-alert dark class="w-100" color="blue darken-3" dense id="break">
+            <v-breadcrumbs :items="titles">
+                <template v-slot:item="{ item }">
+                    <v-breadcrumbs-item
+                        :href="item.href"
+                        :disabled="item.disabled"
+                    >
+                        <v-icon class="ml-2">{{ item.icon }}</v-icon>
+                        <span
+                            :class="item.disabled == false ? 'white--text' : ''"
+                            >{{ item.text }}</span
+                        >
+                    </v-breadcrumbs-item>
+                </template>
+            </v-breadcrumbs>
+        </v-alert>
         <!-- <v-container fluid style="height: contain; margin-top: 15rem"> -->
         <v-layout row wrap justify-space-between>
-            <v-flex xs12 md4 lg3 class="mx-auto">
-                <v-img
+
+            <v-flex xs12 sm12 md12 lg12 class="mx-auto">
+                <!-- <v-avatar size="350" class="mt-5 w-100"> -->
+                <!-- <img
+                        :src="require('../../assets/otibi.jpg').default"
+                        alt="النائب / خالد العتيبي"
+                    /> -->
+                <v-carousel
+                    cycle
+                    height="500"
+                    hide-delimiter-background
+                    show-arrows-on-hover
+                    class="w-100 mt-5"
+                >
+                    <v-carousel-item v-for="(slide, i) in slides" :key="i">
+                        <v-avatar size="500" class="mt-5 w-100" tile
+                        >
+                            <img
+                                :src="slide.src"
+                                alt="النائب / خالد العتيبي"
+                            />
+                        </v-avatar>
+                    </v-carousel-item>
+                </v-carousel>
+                <!-- </v-avatar> -->
+                <!-- <v-img
                     :src="require('../../assets/otibi.jpg').default"
                     class="mt-5"
-                    :height="innerWidth > 750 ? '60vh' : '80vh'"
-                ></v-img>
+                    height="50rem"
+                ></v-img> -->
             </v-flex>
-            <v-flex xs12 md7 lg8 class="mx-auto">
+            <!-- <v-flex xs12 md7 lg8 class="mx-auto">
                 <v-card class="mt-5" color="" style="height: 50rem !important">
                     <v-card-text class="black white--text">
                         <v-icon dark>mdi-account-circle</v-icon>
                         المعلومات الشخصية
                     </v-card-text>
                 </v-card>
-            </v-flex>
+            </v-flex> -->
 
             <v-flex
                 xs12
@@ -79,7 +119,30 @@ export default {
                 "mdi-whatsapp",
                 "mdi-linkedin"
             ],
-            dialog: false
+            dialog: false,
+            slides: [
+                {
+                    src: require("../../assets/otibi.jpg").default
+                },
+                {
+                    src: require("../../assets/otibi.jpg").default
+                },
+                {
+                    src: require("../../assets/otibi.jpg").default
+                },
+                {
+                    src: require("../../assets/otibi.jpg").default
+                }
+            ],
+            titles: [
+                {
+                    href: "/",
+                    icon: "mdi-home",
+                    text: "الرئيسية",
+                    disabled: true
+                },
+                
+            ]
         };
     },
     props: ["settings"],

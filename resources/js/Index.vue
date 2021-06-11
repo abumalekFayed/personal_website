@@ -11,7 +11,7 @@
                 dark
                 shrink-on-scroll
                 prominent
-                :src="require('./assets/download.jpg').default"
+                :src="require('./assets/omma.jpg').default"
                 fade-img-on-scroll
                 scroll-target="#scrolling-techniques-3"
             >
@@ -46,17 +46,80 @@
                     </v-tabs>
                 </template>
             </v-app-bar>
+            <v-speed-dial
+                v-model="fab"
+                absolute
+                top
+                left
+                direction="top"
+                transition="slide-y-reverse-transition"
+                style="top: 50%; left: 0%   "
+            >
+                <template v-slot:activator>
+                    <v-btn v-model="fab" color="blue darken-2" dark fab tile>
+                        <v-icon v-if="fab">
+                            mdi-close
+                        </v-icon>
+                        <v-icon v-else>
+                            mdi-account-circle
+                        </v-icon>
+                    </v-btn>
+                </template>
+                <v-btn fab dark small color="red">
+                    <v-icon>mdi-email</v-icon>
+                </v-btn>
+                <v-btn fab dark small color="indigo">
+                    <v-icon>mdi-facebook</v-icon>
+                </v-btn>
+                <v-btn fab dark small color="blue lighten-2">
+                    <v-icon>mdi-twitter</v-icon>
+                </v-btn>
+            </v-speed-dial>
+
+            <!-- <v-slider
+                v-model="duration"
+                min="0"
+                max="1000"
+                label="Duration"
+                thumb-label
+            ></v-slider> -->
+            <v-speed-dial
+                absolute
+                bottom
+                right
+                direction="top"
+                transition="slide-y-reverse-transition"
+            >
+                <template v-slot:activator>
+                    <v-btn
+                        v-model="fab"
+                        color="blue darken-3"
+                        dark
+                        fab
+                        tile
+                        @click="$vuetify.goTo(-999, options)"
+                    >
+                        <v-icon>
+                            mdi-arrow-up-bold-circle
+                        </v-icon>
+                    </v-btn>
+                </template>
+            </v-speed-dial>
             <v-sheet
                 id="scrolling-techniques-3"
-                class="overflow-y-auto p-0"
+                class="overflow-y-auto p-0 yourCard"
                 max-height="100vh"
+                min-height="100vh"
                 style="overflow-x: hidden !important"
             >
                 <v-container fluid style="height: contain; margin-top: 15rem">
-                    <router-view></router-view>
+                    <router-view>
+                        <div ref="break"></div>
+                    </router-view>
+
                     <v-layout row wrap justify-space-between>
                         <v-flex xs12 md12 lg12>
-                            <v-footer dark padless class="mt-10">
+                            <v-footer dark padless style="top: 100%!important">
                                 <v-card
                                     flat
                                     tile
@@ -351,7 +414,7 @@
 import vLink from "./components/VLink";
 import { bus } from "./app.js";
 import { get } from "vuex-pathify";
-
+import * as easings from "vuetify/es5/services/goto/easing-patterns";
 export default {
     data() {
         return {
@@ -362,7 +425,25 @@ export default {
             text: "",
             routes: [],
             innerWidth: window.innerWidth,
-            icons: ["mdi-facebook", "mdi-email", "mdi-whatsapp", "mdi-linkedin"]
+            icons: [
+                "mdi-facebook",
+                "mdi-email",
+                "mdi-whatsapp",
+                "mdi-linkedin"
+            ],
+            fab: false,
+            hidden: false,
+            tabs: null,
+            type: "number",
+            number: -9999,
+            selector: "#first",
+            selections: ["#first", "#second", "#third"],
+            selected: "Button",
+            elements: ["Button", "Radio group"],
+            duration: 1000,
+            offset: 0,
+            easing: "easeInOutCubic",
+            easings: Object.keys(easings)
         };
     },
     props: ["settings"],
@@ -372,6 +453,24 @@ export default {
     },
 
     computed: {
+        target() {
+            const value = 999;
+            if (!isNaN(value)) return Number(value);
+            else return value;
+        },
+        options() {
+            return {
+                duration: 1000,
+                offset: -500,
+                easing: "easeInOutCubic",
+                 container: ".yourCard"
+            };
+        },
+        element() {
+            if (this.selected === "Button") return this.$refs.button;
+            else if (this.selected === "Radio group") return this.$refs.radio;
+            else return null;
+        },
         ...get(["print_title", "print_type", "_settings", "departments"]),
 
         activeDepartments() {
