@@ -29,11 +29,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       loading: false,
-      new_password: ''
+      new_password: ""
     };
   },
   created: function created() {},
@@ -42,20 +59,20 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (!this.$refs.form.validate()) return;
-      this.axios.post('/resetPassword', {
+      this.axios.post("/resetPassword", {
         code: this.$route.params.code,
         new_password: this.new_password
       }).then(function (res) {
         alert(res.data);
 
-        _this.$router.push('/login');
+        _this.$router.push("/login");
       })["catch"](function (err) {
         console.log(err);
         alert(err);
       });
     },
     close: function close() {
-      this.$emit('closeme');
+      this.$emit("closeme");
     }
   }
 });

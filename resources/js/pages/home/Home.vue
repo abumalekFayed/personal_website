@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-alert dark class="w-100" color="blue darken-3" dense id="break">
+        <v-alert dark class="w-100" color="blue darken-3" dense>
             <v-breadcrumbs :items="titles">
                 <template v-slot:item="{ item }">
                     <v-breadcrumbs-item
@@ -19,7 +19,7 @@
         <!-- <v-container fluid style="height: contain; margin-top: 15rem"> -->
         <v-layout row wrap justify-space-between>
 
-            <v-flex xs12 sm12 md12 lg12 class="mx-auto">
+            <v-flex xs12 sm12 md11 lg9 class="mx-auto">
                 <!-- <v-avatar size="350" class="mt-5 w-100"> -->
                 <!-- <img
                         :src="require('../../assets/otibi.jpg').default"
@@ -30,9 +30,10 @@
                     height="500"
                     hide-delimiter-background
                     show-arrows-on-hover
-                    class="w-100 mt-5"
+                    class="w-100 mt-5 rounded-lg"
                 >
-                    <v-carousel-item v-for="(slide, i) in slides" :key="i">
+                    <v-carousel-item v-for="(slide, i) in slides" :key="i"
+                    class="rounded-lg">
                         <v-avatar size="500" class="mt-5 w-100" tile
                         >
                             <img

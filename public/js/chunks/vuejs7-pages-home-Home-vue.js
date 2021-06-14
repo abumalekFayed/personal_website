@@ -120,6 +120,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -366,6 +367,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/assets/fonts/18 Khebrat Musamim Bold.ttf":
+/*!***************************************************************!*\
+  !*** ./resources/js/assets/fonts/18 Khebrat Musamim Bold.ttf ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/fonts/18 Khebrat Musamim Bold.ttf?3856d9a6fa0e7fd20a217628a164cb7b");
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/home/Home.vue?vue&type=style&index=0&lang=scss&":
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/pages/home/Home.vue?vue&type=style&index=0&lang=scss& ***!
@@ -555,7 +571,7 @@ var render = function() {
         "v-alert",
         {
           staticClass: "w-100",
-          attrs: { dark: "", color: "blue darken-3", dense: "", id: "break" }
+          attrs: { dark: "", color: "blue darken-3", dense: "" }
         },
         [
           _c("v-breadcrumbs", {
@@ -601,13 +617,13 @@ var render = function() {
             "v-flex",
             {
               staticClass: "mx-auto",
-              attrs: { xs12: "", sm12: "", md12: "", lg12: "" }
+              attrs: { xs12: "", sm12: "", md11: "", lg9: "" }
             },
             [
               _c(
                 "v-carousel",
                 {
-                  staticClass: "w-100 mt-5",
+                  staticClass: "w-100 mt-5 rounded-lg",
                   attrs: {
                     cycle: "",
                     height: "500",
@@ -618,7 +634,7 @@ var render = function() {
                 _vm._l(_vm.slides, function(slide, i) {
                   return _c(
                     "v-carousel-item",
-                    { key: i },
+                    { key: i, staticClass: "rounded-lg" },
                     [
                       _c(
                         "v-avatar",

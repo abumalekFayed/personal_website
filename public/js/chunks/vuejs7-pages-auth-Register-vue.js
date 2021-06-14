@@ -49,6 +49,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -67,14 +119,14 @@ __webpack_require__.r(__webpack_exports__);
       if (this.$refs.form.validate()) {
         this.loading = true;
         var data = window.jsonToFormData(this.user);
-        this.axios.post('/auth/register', data).then(function () {
+        this.axios.post("/auth/register", data).then(function () {
           _this.$auth.login({
             params: {
               email: _this.user.email,
               password: _this.user.password
             },
             success: function success() {
-              this.$router.push('dashboard');
+              this.$router.push("dashboard");
               this.loading = false;
             },
             error: function error() {
@@ -482,7 +534,7 @@ var render = function() {
             { attrs: { dark: "", dense: "", text: "", color: "#0d1f76" } },
             [
               _c("v-toolbar-title", [
-                _vm._v("\n            Register new user\n        ")
+                _vm._v("\n                Register new user\n            ")
               ])
             ],
             1
@@ -503,7 +555,13 @@ var render = function() {
                             return _c(
                               "li",
                               { key: error.id, staticStyle: { margin: "0px" } },
-                              [_vm._v(_vm._s(error[0]))]
+                              [
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(error[0]) +
+                                    "\n                        "
+                                )
+                              ]
                             )
                           }),
                           0
