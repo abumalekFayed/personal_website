@@ -63,12 +63,12 @@
                     
                 </v-slide-item>
             </v-slide-group>
-            <div class="fotorama" id="fotorama" style="height: 40px">
+            <!-- <div class="fotorama" id="fotorama" style="height: 40px">
                         <img src="https://s.fotorama.io/1.jpg" />
                         <img src="https://s.fotorama.io/2.jpg" />
                         <img src="https://s.fotorama.io/1.jpg">
   <img src="https://s.fotorama.io/2.jpg">
-                    </div>
+                    </div> -->
         </v-card-text>
 
         <v-card-title v-else>

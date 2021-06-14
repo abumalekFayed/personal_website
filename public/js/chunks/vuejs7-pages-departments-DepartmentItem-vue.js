@@ -498,24 +498,6 @@ var render = function() {
                   )
                 }),
                 1
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "fotorama",
-                  staticStyle: { height: "40px" },
-                  attrs: { id: "fotorama" }
-                },
-                [
-                  _c("img", { attrs: { src: "https://s.fotorama.io/1.jpg" } }),
-                  _vm._v(" "),
-                  _c("img", { attrs: { src: "https://s.fotorama.io/2.jpg" } }),
-                  _vm._v(" "),
-                  _c("img", { attrs: { src: "https://s.fotorama.io/1.jpg" } }),
-                  _vm._v(" "),
-                  _c("img", { attrs: { src: "https://s.fotorama.io/2.jpg" } })
-                ]
               )
             ],
             1
