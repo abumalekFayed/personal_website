@@ -16,48 +16,28 @@
                 </template>
             </v-breadcrumbs>
         </v-alert>
-        <!-- <v-container fluid style="height: contain; margin-top: 15rem"> -->
+
+        <v-card class="d-flex justify-center">
+            <div
+                class="fotorama"
+                data-allowfullscreen="true"
+                data-autoplay="true"
+                data-nav="thumbs"
+                data-width="100%"
+                data-ratio="640/480"
+                data-fit="cover"
+                style="width: 100% !important"
+            >
+                <img
+                    v-for="(slide, i) in slides"
+                    :key="i"
+                    :src="slide.src"
+                    style="width: 100% !important"
+                />
+            </div>
+        </v-card>
+
         <v-layout row wrap justify-space-between>
-
-            <v-flex xs12 sm12 md12 lg12 class="mx-auto">
-                <!-- <v-avatar size="350" class="mt-5 w-100"> -->
-                <!-- <img
-                        :src="require('../../assets/otibi.jpg').default"
-                        alt="النائب / خالد العتيبي"
-                    /> -->
-                <v-carousel
-                    cycle
-                    height="500"
-                    hide-delimiter-background
-                    show-arrows-on-hover
-                    class="w-100 mt-5"
-                >
-                    <v-carousel-item v-for="(slide, i) in slides" :key="i">
-                        <v-avatar size="500" class="mt-5 w-100" tile
-                        >
-                            <img
-                                :src="slide.src"
-                                alt="النائب / خالد العتيبي"
-                            />
-                        </v-avatar>
-                    </v-carousel-item>
-                </v-carousel>
-                <!-- </v-avatar> -->
-                <!-- <v-img
-                    :src="require('../../assets/otibi.jpg').default"
-                    class="mt-5"
-                    height="50rem"
-                ></v-img> -->
-            </v-flex>
-            <!-- <v-flex xs12 md7 lg8 class="mx-auto">
-                <v-card class="mt-5" color="" style="height: 50rem !important">
-                    <v-card-text class="black white--text">
-                        <v-icon dark>mdi-account-circle</v-icon>
-                        المعلومات الشخصية
-                    </v-card-text>
-                </v-card>
-            </v-flex> -->
-
             <v-flex
                 xs12
                 sm12
@@ -65,8 +45,6 @@
                 lg11
                 class="mx-auto p-0 row mt-10 elevaion-3"
             >
-                <!-- <v-card class="elevation-3 mt-10 p-0"> -->
-                <!-- <v-row class=""> -->
                 <v-btn
                     class="fullWC mx-auto"
                     style="height: 10rem !important;"
@@ -90,19 +68,14 @@
                         {{ department.name }}
                     </h3>
                 </v-btn>
-                <!-- </v-row> -->
-                <!-- </v-card> -->
             </v-flex>
         </v-layout>
-        <!-- </v-container> -->
     </div>
 </template>
 
 <script>
-import vLink from "../../components/VLink";
 import { bus } from "../../app.js";
 import { get } from "vuex-pathify";
-
 export default {
     data() {
         return {
@@ -125,31 +98,24 @@ export default {
                     src: require("../../assets/otibi.jpg").default
                 },
                 {
-                    src: require("../../assets/otibi.jpg").default
+                    src: require("../../assets/otibi2.jpg").default
                 },
                 {
-                    src: require("../../assets/otibi.jpg").default
+                    src: require("../../assets/otibi3.jpg").default
                 },
-                {
-                    src: require("../../assets/otibi.jpg").default
-                }
             ],
+            slides2: [],
             titles: [
                 {
                     href: "/",
                     icon: "mdi-home",
                     text: "الرئيسية",
                     disabled: true
-                },
-                
+                }
             ]
         };
     },
     props: ["settings"],
-
-    components: {
-        vLink
-    },
 
     computed: {
         ...get(["print_title", "print_type", "_settings", "departments"]),
@@ -158,7 +124,16 @@ export default {
             return this.departments.filter(d => d.state == "active");
         }
     },
+    mounted() {
+        this.loadFotorama();
+    },
     methods: {
+        loadFotorama() {
+            let script = document.createElement("script");
+            script.src =
+                "https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js";
+            document.documentElement.firstChild.appendChild(script);
+        },
         logout() {
             if (!confirm("Are you sure to logout?")) return;
             this.axios.post("auth/logout").then(res => {
@@ -175,15 +150,6 @@ export default {
         toTop() {
             this.$vuetify.goTo(0);
         }
-    },
-
-    mounted() {
-        bus.$on("__print", type_id => {
-            console.log("printing");
-            setTimeout(() => {
-                this.$refs.__print ? this.$refs.__print.print() : "";
-            }, 400);
-        });
     },
 
     created() {

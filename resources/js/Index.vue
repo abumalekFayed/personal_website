@@ -22,7 +22,7 @@
                     ></v-img>
                 </template>
 
-                <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+                <v-app-bar-nav-icon @click="drawer = !drawer" class="mt-2"></v-app-bar-nav-icon>
 
                 <div style="width:100%;" class="mt-3 mb-3">
                     <h4 style="width:100%">النائب / خالد العتيبي</h4>
@@ -31,10 +31,10 @@
                     </h6>
                 </div>
 
-                <v-spacer></v-spacer>
+                <!-- <v-spacer></v-spacer>
                 <v-btn icon @click="drawer = !drawer">
                     <v-icon>mdi-menu</v-icon>
-                </v-btn>
+                </v-btn> -->
                 <template v-slot:extension>
                     <v-tabs align-with-title>
                         <v-tab style="width: 11rem" to="/login2"
@@ -96,7 +96,6 @@
                         color="blue darken-3"
                         dark
                         fab
-                        tile
                         @click="$vuetify.goTo(-999, options)"
                     >
                         <v-icon>
@@ -113,13 +112,17 @@
                 style="overflow-x: hidden !important"
             >
                 <v-container fluid style="height: contain; margin-top: 15rem">
+                    <v-main>
                     <router-view>
                         <div ref="break"></div>
                     </router-view>
+                    </v-main>
 
                     <v-layout row wrap justify-space-between>
                         <v-flex xs12 md12 lg12>
-                            <v-footer dark padless style="top: 100%!important">
+                            <v-footer dark padless 
+                            
+                            style="margin-top: 45vh">
                                 <v-card
                                     flat
                                     tile
@@ -141,8 +144,21 @@
                                     </v-card-text>
 
                                     <v-divider></v-divider>
+                                    <v-btn
+                                        color="blue darken-3"
+                                        style="margin-top: -2rem"
+                                        dark
+                                        rounded
+                                        class="white--text mb-0"
+                                        small
+                                        to="/contact-us"
+                                    >
+                                        <v-icon small  dark class="ml-3">
+                                            mdi-phone-in-talk</v-icon>
+                                            تواصل معانا
+                                    </v-btn>
 
-                                    <v-card-text class="white--text">
+                                    <v-card-text class="white--text  mb-0">
                                         <strong
                                             >جميع الحقوق محفوظة - النائب / خالد
                                             العتيبي</strong
@@ -160,7 +176,7 @@
                     clipped
                     app
                     flat
-                    left
+                    right
                     v-model="drawer"
                 >
                     <v-list>
@@ -298,6 +314,7 @@
                     </v-list>
                 </v-navigation-drawer>
             </v-sheet>
+            
         </v-card>
 
         <!--	<v-app-bar height="60" clipped-left clipped-right dark dense flat app class="pa-0 ma-0 info">
@@ -366,7 +383,8 @@
 		</v-navigation-drawer> -->
 
         <!-- page content -->
-        <!-- <v-main style="background-image: url('imgs/bg1.jpeg');background-size:100% 100%">
+        <!-- <v-main
+         style="background-image: url('imgs/bg1.jpeg');background-size:100% 100%">
 			<v-container style="max-width:1000px;margin-bottom:180px">
 				<v-btn v-scroll="onScroll" 
 				v-show="fab" fab dark 
@@ -404,7 +422,8 @@
 		</v-snackbar> -->
 
         <!-- public print layout -->
-        <!-- <print-layout ref="__print" class="d-none" :title="print_title" :type="print_type">
+        <!-- <print-layout ref="__print" class="d-none" 
+        :title="print_title" :type="print_type">
 			<div id="print_template123"> </div>
 		</print-layout> -->
     </v-app>
@@ -425,12 +444,7 @@ export default {
             text: "",
             routes: [],
             innerWidth: window.innerWidth,
-            icons: [
-                "mdi-facebook",
-                "mdi-email",
-                "mdi-whatsapp",
-                "mdi-linkedin"
-            ],
+            icons: ["mdi-facebook", "mdi-email", "mdi-twitter", "mdi-linkedin"],
             fab: false,
             hidden: false,
             tabs: null,
@@ -463,7 +477,7 @@ export default {
                 duration: 1000,
                 offset: -500,
                 easing: "easeInOutCubic",
-                 container: ".yourCard"
+                container: ".yourCard"
             };
         },
         element() {
@@ -506,6 +520,7 @@ export default {
     },
 
     created() {
+        
         if (this.departments.length == 0) this.$store.set("departments");
 
         this.$store.set("settings", this.settings);
@@ -688,13 +703,7 @@ a {
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
-@font-face {
-    font-family: kufy;
-    src: url("./assets/fonts/18 Khebrat Musamim Bold.ttf");
-}
-#app {
-    font-family: kufy !important;
-}
+
 // .v-btn__content {
 //     display: flex;
 //     flex-direction: column;

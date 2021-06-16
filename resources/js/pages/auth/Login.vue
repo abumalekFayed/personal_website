@@ -18,10 +18,9 @@
         </v-alert>
         <!-- <img src="storage/imgs/logo2.jpg" style="max-height:350px"> -->
         <v-card
-            style="width:50%"
             outlined
             v-if="$auth.check() == false"
-            class="rounded-lg"
+            class="rounded-lg log"
         >
             <v-img :src="require('../../assets/omma.jpg').default">
                 <v-card-title
@@ -202,3 +201,13 @@ export default {
     }
 };
 </script>
+<style>
+.log {
+    width: 50%;
+}
+@media (max-width: 780px) {
+    .log {
+        width: 100%;
+    }
+}
+</style>
