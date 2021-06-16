@@ -39,6 +39,7 @@
         "mitt": "^2.1.0",
         "primevue": "^2.0.0",
         "spotlight.js": "^0.7.72",
+        "v-viewer": "^1.6.3",
         "vue-axios": "^3.2.4",
         "vue-i18n": "^8.22.4",
         "vue-light-gallery": "^1.0.1",

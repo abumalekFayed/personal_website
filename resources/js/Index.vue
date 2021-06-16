@@ -22,7 +22,7 @@
                     ></v-img>
                 </template>
 
-                <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
+                <v-app-bar-nav-icon @click="drawer = !drawer" class="mt-2"></v-app-bar-nav-icon>
 
                 <div style="width:100%;" class="mt-3 mb-3">
                     <h4 style="width:100%">النائب / خالد العتيبي</h4>
@@ -31,10 +31,10 @@
                     </h6>
                 </div>
 
-                <v-spacer></v-spacer>
+                <!-- <v-spacer></v-spacer>
                 <v-btn icon @click="drawer = !drawer">
                     <v-icon>mdi-menu</v-icon>
-                </v-btn>
+                </v-btn> -->
                 <template v-slot:extension>
                     <v-tabs align-with-title>
                         <v-tab style="width: 11rem" to="/login2"
@@ -314,6 +314,7 @@
                     </v-list>
                 </v-navigation-drawer>
             </v-sheet>
+            
         </v-card>
 
         <!--	<v-app-bar height="60" clipped-left clipped-right dark dense flat app class="pa-0 ma-0 info">

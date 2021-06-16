@@ -1,19 +1,5 @@
 <template>
-    <v-card class="p-0">
-        <!-- <v-toolbar class="primary white--text" dark>
-			<v-toolbar-title>
-				{{item.name}}
-			</v-toolbar-title>
-			<v-spacer></v-spacer>
-
-			<v-btn class="mx-2" dark color="info" @click="$router.back()">
-				<v-icon size="40" color="white">mdi-arrow-left</v-icon>
-			</v-btn>
-
-			<v-btn class="mx-2" dark color="info" to="/">
-				<v-icon size="30" color="white">mdi-home</v-icon>
-			</v-btn>
-		</v-toolbar> -->
+    <v-card>
         <v-alert dark class="w-100" color="blue darken-3" dense>
             <v-breadcrumbs :items="titles">
                 <template v-slot:item="{ item }">
@@ -30,67 +16,46 @@
                 </template>
             </v-breadcrumbs>
         </v-alert>
-
-        <v-card-text
-            class="row p-0 mx-auto ml-0"
-            v-if="item.department.file_type == 'image'"
-        >
-            <!-- <a
-                v-for="document in item.documents"
-                id="lightgallery"
-                :href="'/storage/' + document.path"
-                :key="document"
-                class="item-img  mx-auto"
+        <v-card-text>
+            <div
+                class="fotorama grey lighten-2"
+                data-allowfullscreen="true"
+                data-nav="thumbs"
+                data-maxheight="300"
+                data-width="800"
+                data-height="400"
             >
-                <img
-                    width="90%"
-                    height="200"
-                    :src="'/storage/' + document.path"
-                    class="mx-auto"
-                />
-            </a> -->
-            <v-slide-group class="pa-4 mx-auto" show-arrows>
-                <v-slide-item v-for="slide in slides" :key="slide.src">
-                    <v-card class="ma-4" height="200" width="200" link>
-                        <a :href="slide.src" class="fotorama">
-                            <v-img
-                                height="100%"
-                                width="100%"
-                                :src="slide.src"
-                            ></v-img>
-                        </a>
-                    </v-card>
-                    
-                </v-slide-item>
-            </v-slide-group>
-            <!-- <div class="fotorama" id="fotorama" style="height: 40px">
-                        <img src="https://s.fotorama.io/1.jpg" />
-                        <img src="https://s.fotorama.io/2.jpg" />
-                        <img src="https://s.fotorama.io/1.jpg">
-  <img src="https://s.fotorama.io/2.jpg">
-                    </div> -->
+                <template v-if="item && item.department.file_type == 'image'">
+                    <img
+                        v-for="document in item.documents"
+                        :key="document.id"
+                        :src="'/storage/' + document.path"
+                    />
+                </template>
+                <template v-else>
+                    <a
+                        :href="
+                            'https://youtube.com/watch?v=' + item.youtube_link
+                        "
+                        >Desert Rose</a
+                    >
+                </template>
+            </div>
         </v-card-text>
 
-        <v-card-title v-else>
-            <div class="video-container">
-                <iframe
-                    :src="`https://www.youtube.com/embed/${item.youtube_link}`"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                ></iframe>
-            </div>
-        </v-card-title>
+        <v-card-text>
+            {{ item.description }}
+        </v-card-text>
     </v-card>
 </template>
 
 <script>
-import jsonToFormDataMin from "../../plugins/jsonToFormData.min";
 export default {
     data() {
         return {
             show_add_item: false,
             item: "",
+            gallery: [],
             titles: [
                 {
                     href: "/",
@@ -110,35 +75,30 @@ export default {
                     text: "",
                     disabled: true
                 }
-            ],
-            slides: [
-                {
-                    src: require("../../assets/otibi.jpg").default
-                },
-                {
-                    src: require("../../assets/otibi.jpg").default
-                },
-                {
-                    src: require("../../assets/otibi.jpg").default
-                },
-                {
-                    src: require("../../assets/otibi.jpg").default
-                }
             ]
         };
     },
-    created() {
-        this.fetchDepartment();
+
+    mounted() {
+		this.fetchDepartment();
         setTimeout(() => {
             this.fetchDepartmentItem();
         }, 350);
     },
+
     methods: {
+        loadFotorama() {
+            let script = document.createElement("script");
+            script.src =
+                "https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js";
+            document.documentElement.firstChild.appendChild(script);
+        },
         fetchDepartmentItem() {
             axios
                 .get("department-item/" + this.$route.params.item_id)
                 .then(res => {
                     this.item = res.data;
+                    this.loadFotorama();
                     this.titles[2].text = res.data.name;
                     this.titles[2].icon = "mdi-info";
                 });
@@ -153,9 +113,7 @@ export default {
                 }, 300);
             });
         }
-    },
-    mounted() {},
-    watch: {}
+    }
 };
 </script>
 
@@ -186,14 +144,4 @@ export default {
     width: 100%;
     height: 100%;
 }
-.item-img {
-    width: 25%;
-}
-@media (max-width: 780px) {
-    .item-img {
-        width: 100%;
-        background-color: red;
-    }
-}
-
 </style>
