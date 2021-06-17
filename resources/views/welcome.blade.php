@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
         body {
-            font-family: 'Nunito';
+            font-family: 'kufy';
         }
         @font-face {
     font-family: kufy;

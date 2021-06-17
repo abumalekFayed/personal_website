@@ -27,8 +27,11 @@ class DepartmentItemController extends Controller
             $item = DepartmentItem::create(request()->only('department_id', 'name', 'description', 'youtube_link'));
             if (request()->documents && is_array(request()->documents)) {
                 foreach (request()->documents as $file) {
+
+                    $image = getimagesize($file);
+
                     $file_path = $file->store('department_files', ['disk' => 'public']);
-                    $item->documents()->create(['path' => $file_path]);
+                    $item->documents()->create(['path' => $file_path, 'w' => $image[0], 'h' => $image[1]]);
                 }
             }
             DB::commit();

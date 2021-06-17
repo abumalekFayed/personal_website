@@ -25,6 +25,15 @@ class SettingController extends Controller
             $data['main_image'] = $path;
         }
 
+        if (\request()->hasFile('slider_images')) {
+            $images = [];
+            foreach (request()->slider_images as $image) {
+                $path = $image->store('slider_images', ['disk' => 'public']);
+                array_push($images, $path);
+            }
+            $data['slider_images'] = $images;
+        }
+
         if (\request()->hasFile('side_bare_image')) {
             $path = \request()->side_bare_image->store('bg_images', ['disk' => 'public']);
             $data['side_bar_bg'] = $path;

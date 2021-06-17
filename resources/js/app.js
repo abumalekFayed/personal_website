@@ -19,6 +19,7 @@ import driverAuthBearer from "@websanova/vue-auth/dist/drivers/auth/bearer.esm.j
 import driverHttpAxios from "@websanova/vue-auth/dist/drivers/http/axios.1.x.esm.js";
 import driverRouterVueRouter from "@websanova/vue-auth/dist/drivers/router/vue-router.2.x.esm.js";
 import VueMoment from "vue-moment";
+
 const moment = require("moment");
 require("moment/locale/ar");
 Vue.use(VueMoment, {

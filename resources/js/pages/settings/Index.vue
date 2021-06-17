@@ -18,7 +18,7 @@
 
 		</div> -->
 
-		<v-file-input label="الصورة الشخصية" v-model="main_image"> </v-file-input>
+		<v-file-input label="الصورة الرئيسية" v-model="slider_images" multiple> </v-file-input>
 
 		<div style="height:50px">
 			<img height="50px" :src="'/storage/'+ general_settings.bg">
@@ -40,6 +40,7 @@
 				bg_image: [],
 				side_bare_image: [],
 				main_image: [],
+				slider_images: [],
 				loading: false,
 				default_settings: {
 					title: "Smart dental clinic",
@@ -59,9 +60,7 @@
 		},
 
 		methods: {
-			loadDefaultSettings() {
-				this.$store.dispatch("fetchDefaultGeneralInfo");
-			},
+
 
 			changeAppColor() {
 				this.$vuetify.theme.themes.light.primary = this.settings.color
@@ -74,7 +73,7 @@
 					data: this.general_settings,
 					side_bare_image: this.side_bare_image,
 					bg_image: this.bg_image,
-					main_image: this.main_image,
+					slider_images: this.slider_images,
 				};
 				const form_data = jsonToFormData(data);
 				axios.post("setting", form_data).then((res) => {
