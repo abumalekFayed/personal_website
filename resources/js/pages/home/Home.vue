@@ -9,7 +9,7 @@
 			</template>
 		</v-breadcrumbs>
 
-		test
+		test22
 
 		<div class="d-flex justify-center">
 			<div class="fotorama" data-allowfullscreen="true" data-autoplay="true" data-nav="thumbs" data-max-height="350" data-width="800" data-ratio="440/380">
