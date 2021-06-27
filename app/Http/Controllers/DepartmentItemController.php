@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\DB;
 class DepartmentItemController extends Controller
 {
 
+    public function index()
+    {
+
+
+
+        return DepartmentItem::latest()->when(\request()->search, function ($q) {
+            return  $q->searchIn(['name', 'description'], \request()->search);
+        })->where('department_id', request()->department_id)->paginate(request()->items_per_page);
+    }
+
     public function show(DepartmentItem $department_item)
     {
         return $department_item->load('department', 'documents');
@@ -24,7 +34,7 @@ class DepartmentItemController extends Controller
 
         try {
             $file_path = '';
-            $item = DepartmentItem::create(request()->only('department_id', 'name', 'description', 'youtube_link'));
+            $item = DepartmentItem::create(request()->only('department_id', 'name', 'description', 'description_summary', 'youtube_link'));
             if (request()->documents && is_array(request()->documents)) {
                 foreach (request()->documents as $file) {
 
@@ -47,7 +57,7 @@ class DepartmentItemController extends Controller
         DB::beginTransaction();
         try {
             $file_path = '';
-            $department_item->update(request()->only('department_id', 'name', 'description', 'youtube_link'));
+            $department_item->update(request()->only('department_id', 'name', 'description', 'description_summary', 'youtube_link'));
             if (request()->documents && is_array(request()->documents)) {
                 foreach (request()->documents as $file) {
                     $file_path = $file->store('department_files', ['disk' => 'public']);

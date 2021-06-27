@@ -27,12 +27,15 @@
 				<a :href="'https://youtube.com/watch?v=' + item.youtube_link"></a>
 			</div> -->
 		</v-card-text>
-		<v-card-title class="primary white--text justify-center pa-1">
+		<v-card-text style="font-size:16px" class="primary white--text text-center d-flex align-center justify-center pa-1">
 			{{item.name}}
-		</v-card-title>
+		</v-card-text>
 		<v-card-text class="pa-3">
-			<p>{{$moment(item.created_at).format('DD-MM-YYYY')}}</p>
-			{{ item.description }}
+			<small>{{$moment(item.created_at).format('DD-MM-YYYY')}}</small>
+			<div v-html="item.description">
+
+			</div>
+
 		</v-card-text>
 	</v-card>
 </template>
@@ -139,7 +142,6 @@
 					.get("department-item/" + this.$route.params.item_id)
 					.then(res => {
 						this.item = res.data;
-
 
 						this.imgs = this.item.documents.map(d => {
 

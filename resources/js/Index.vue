@@ -1,7 +1,20 @@
 <template>
 	<v-app>
+		<v-app-bar color="black" shrink-on-scroll :src="'/storage/'+ general_settings.app_bar_bg " fade-img-on-scroll scroll-target="#scrolling-techniques-3" dark dense flat app>
+			<template v-slot:img="{ props }">
+				<v-img v-bind="props" gradient="to top right, rgba(100,115,201,.1), rgba(25,32,72,.3)"></v-img>
+			</template>
 
-		<v-navigation-drawer dark fixed app flat right v-model="drawer">
+			<v-app-bar-nav-icon @click="drawer = !drawer" class="mt-2"></v-app-bar-nav-icon>
+
+			<div style="cursor: pointer" class="mt-3 mb-3" @click="$router.push('/')">
+				<h4>{{_settings('general').websit_title}}</h4>
+				<h6>{{_settings('general').websit_subtitle}}</h6>
+			</div>
+		</v-app-bar>
+
+		<v-navigation-drawer dark fixed app flat right v-model="drawer" :src="'/storage/'+ general_settings.side_bar_bg ">
+
 			<v-list>
 				<v-list-item v-if="$auth.check()" class="px-2 primary lighten-5" style="margin-top: -9px;">
 					<v-list-item-avatar>
@@ -15,6 +28,17 @@
 					</v-list-item-content>
 					<v-chip small color="error" class="mx-2" label v-if="$auth.check()" @click="logout">logout</v-chip>
 				</v-list-item>
+
+				<v-list-item v-for="(department, i) in activeDepartments" :key="'d_' + department.id" :to="'/departments/' + department.id" color="primary">
+					<v-list-item-icon>
+						<v-icon>{{ department.icon }}</v-icon>
+					</v-list-item-icon>
+					<v-list-item-title>{{
+                                department.name
+                            }}</v-list-item-title>
+				</v-list-item>
+
+				<v-divider></v-divider>
 				<template>
 					<template v-if=" $auth.check()">
 						<v-list-item to="/user-dashboard" color="primary">
@@ -24,10 +48,11 @@
 							<v-list-item-title>لوحة التحكم</v-list-item-title>
 						</v-list-item>
 					</template>
+
 					<div v-for="(item, index) in routes" :key="index">
 
 						<template>
-							<v-list-item color="indigo" :key="index" :to="item.path" v-if="
+							<v-list-item color="primary" :key="index" :to="item.path" v-if="
                                             !item.hide && $auth.check()">
 								<v-list-item-icon>
 									<v-icon>{{ item.icon }}</v-icon>
@@ -40,37 +65,17 @@
 						</template>
 					</div>
 				</template>
-
-				<v-list-item v-for="(department, i) in activeDepartments" :key="'d_' + department.id" :to="'/departments/' + department.id" color="primary">
-					<v-list-item-icon>
-						<v-icon>{{ department.icon }}</v-icon>
-					</v-list-item-icon>
-					<v-list-item-title>{{
-                                department.name
-                            }}</v-list-item-title>
-				</v-list-item>
 			</v-list>
+
 		</v-navigation-drawer>
-
-		<v-app-bar color="black" shrink-on-scroll :src="require('./assets/omma.jpg').default" fade-img-on-scroll scroll-target="#scrolling-techniques-3" dark dense flat app>
-			<template v-slot:img="{ props }">
-				<v-img v-bind="props" gradient="to top right, rgba(100,115,201,.1), rgba(25,32,72,.3)"></v-img>
-			</template>
-
-			<v-app-bar-nav-icon @click="drawer = !drawer" class="mt-2"></v-app-bar-nav-icon>
-
-			<div class="mt-3 mb-3" @click="$router.push('/')">
-				<h4 style="width:100%">النائب / خالد العتيبي</h4>
-			</div>
-		</v-app-bar>
 
 		<!--  -->
 
 		<!-- <v-sheet id="scrolling-techniques-2" class="overflow-y-auto" max-height="600"> -->
 
-		<v-main class="grey lighten-4">
+		<v-main class="grey lighten-4" :style="'background-image: url(/storage/'+ general_settings.bg +');background-repeat: repeat'">
 
-			<v-speed-dial v-model="fab2" absolute fixed top left direction="top" transition="slide-y-reverse-transition" style="top: 50%; left: 0%   ">
+			<v-speed-dial v-model="fab2" absolute fixed top left direction="top" transition="slide-y-reverse-transition" style="top: 70%; left: 0%   ">
 				<template v-slot:activator>
 					<v-btn v-model="fab2" color="blue darken-2" dark fab tile>
 						<v-icon v-if="fab2">
@@ -81,67 +86,57 @@
 						</v-icon>
 					</v-btn>
 				</template>
-				<v-btn fab dark small color="red">
-					<v-icon>mdi-email</v-icon>
+				<v-btn v-for="(icon,i) in icons" :key="i" fab dark small :color="icon.color" :href="_settings('general')[icon.link]" target="_blank">
+					<v-icon size="24px">
+						{{ icon.name }}
+					</v-icon>
 				</v-btn>
-				<v-btn fab dark small color="indigo">
-					<v-icon>mdi-facebook</v-icon>
-				</v-btn>
-				<v-btn fab dark small color="blue lighten-2">
-					<v-icon>mdi-twitter</v-icon>
-				</v-btn>
+
 			</v-speed-dial>
 
-			<v-container style="max-width:1000px;margin-bottom:180px" class="grey lighten-4">
-
+			<v-container style="max-width:900px;margin-bottom:50px">
 				<v-btn v-scroll="onScroll" v-show="fab" fab dark fixed bottom right color="primary" @click="toTop">
 					<v-icon>mdi-arrow-up </v-icon>
 				</v-btn>
-
-				<router-view :key="$route.fullPath">
-
-				</router-view>
-
+				<router-view :key="$route.fullPath"></router-view>
 			</v-container>
-
-			<v-footer dark padless absolute>
-				<v-card flat tile width="100%" class="blue darken-3 text-center">
-					<v-card-text>
-						<v-btn v-for="icon in icons" :key="icon" class="mx-4" icon dark>
-							<v-icon size="24px">
-								{{ icon }}
-							</v-icon>
-						</v-btn>
-					</v-card-text>
-
-					<v-divider></v-divider>
-					<v-btn color="blue darken-3" style="margin-top: -2rem" dark rounded class="white--text mb-0" small to="/contact-us">
-						<v-icon small dark class="ml-3">
-							mdi-phone-in-talk</v-icon>
-						تواصل معانا
-					</v-btn>
-
-					<v-card-text class="white--text  mb-0">
-						<strong>جميع الحقوق محفوظة - النائب / خالد
-							العتيبي</strong>
-						- {{ new Date().getFullYear() }}
-					</v-card-text>
-				</v-card>
-			</v-footer>
 		</v-main>
 
+		<v-footer dark color="green lighten-4" padless inset app absolute>
+			<v-card flat tile width="100%" class="blue darken-3 text-center">
+
+				<v-card-title class="justify-center">
+					<v-btn v-for="(icon,i) in icons" :key="i" class="mx-4" icon dark :href="_settings('general')[icon.link]" target="_blank">
+						<v-icon size="24px">
+							{{ icon.name }}
+						</v-icon>
+					</v-btn>
+				</v-card-title>
+
+				<v-divider></v-divider>
+				<v-btn color="blue darken-3" style="margin-top: -2rem" dark rounded class="white--text mb-0" small @click="$router.push('/contact-us')">
+					<v-icon small dark class="ml-3">
+						mdi-phone-in-talk</v-icon>
+					تواصل معانا
+				</v-btn>
+
+				<v-card-text class="white--text  mb-0">
+					<strong>جميع الحقوق محفوظة - النائب / خالد
+						العتيبي</strong>
+					- {{ new Date().getFullYear() }}
+
+					<p class="py-1 my-1">{{general_settings.description}}</p>
+				</v-card-text>
+			</v-card>
+		</v-footer>
 	</v-app>
 </template>
 
 <script>
-	import vLink from "./components/VLink";
-	import {
-		bus
-	} from "./app.js";
+
 	import {
 		get
 	} from "vuex-pathify";
-	import * as easings from "vuetify/es5/services/goto/easing-patterns";
 	export default {
 		data() {
 			return {
@@ -152,7 +147,14 @@
 				text: "",
 				routes: [],
 				innerWidth: window.innerWidth,
-				icons: ["mdi-facebook", "mdi-email", "mdi-twitter", "mdi-linkedin"],
+
+				icons: [
+					{ name: 'mdi-facebook', link: 'facebook_link', color: 'primary' },
+					{ name: 'mdi-youtube', link: 'youtube_link', color: 'error' },
+					{ name: 'mdi-twitter', link: 'twitter_link', color: 'info' },
+					// { name: 'mdi-instagram', link: 'instgram_link', color: 'red' },
+
+				],
 				fab2: false,
 				hidden: false,
 				tabs: null,
@@ -164,52 +166,21 @@
 				duration: 1000,
 				offset: 0,
 				easing: "easeInOutCubic",
-				easings: Object.keys(easings)
 			};
 		},
 		props: ["settings"],
 
-		components: {
-			vLink
-		},
+
 
 		computed: {
-			// crumbs() {
-			// 	let pathArray = this.$route.path.split("/")
-			// 	pathArray.shift()
-			// 	let breadcrumbs = pathArray.reduce((breadcrumbArray, path, idx) => {
-			// 		breadcrumbArray.push({
-			// 		path: path,
-			// 		to: breadcrumbArray[idx - 1]
-			// 		? "/" + breadcrumbArray[idx - 1].path + "/" + path
-			// 		: "/" + path,
-			// 		text: this.$route.matched[idx] ? this.$route.matched[idx].meta.breadCrumb : '',
-			// 		});
-			// 		return breadcrumbArray;
-			// 	}, [])
-			// 	return breadcrumbs;
-			// },
 
-			target() {
-				const value = 999;
-				if (!isNaN(value)) return Number(value);
-				else return value;
-			},
-			options() {
-				return {
-					duration: 1000,
-					offset: -500,
-					easing: "easeInOutCubic",
-					container: ".yourCard"
-				};
-			},
-
-			...get(["print_title", "print_type", "_settings", "departments"]),
+			...get(["print_title", "print_type", "_settings", 'general_settings', "departments"]),
 
 			activeDepartments() {
 				return this.departments.filter(d => d.state == "active");
 			}
 		},
+
 		methods: {
 			logout() {
 				if (!confirm("Are you sure to logout?")) return;
@@ -229,15 +200,7 @@
 			}
 		},
 
-		mounted() {
-			console.log(this.settings)
-			bus.$on("__print", type_id => {
-				console.log("printing");
-				setTimeout(() => {
-					this.$refs.__print ? this.$refs.__print.print() : "";
-				}, 400);
-			});
-		},
+
 
 		created() {
 
@@ -353,36 +316,6 @@
 		padding: 10px;
 	}
 
-	.__registered,
-	.__planned,
-	.__waiting {
-		background-color: yellow !important;
-	}
-
-	.__confirmed {
-		background-color: rgb(157, 157, 223) !important;
-	}
-
-	.__payed,
-	.__active,
-	.__activated {
-		background-color: rgb(51, 51, 243) !important;
-		color: white !important;
-	}
-
-	.__accepted,
-	.__performed {
-		background-color: rgb(71, 250, 125) !important;
-	}
-
-	.__refused,
-	.__cancelled {
-		background-color: rgb(247, 63, 38) !important;
-		color: white !important;
-	}
-
-	// p {
-	//     color: black;
 	// }
 	.text-center {
 		text-align: center !important;
@@ -430,9 +363,7 @@
 		background: #555;
 	}
 
-	// .v-btn__content {
-	//     display: flex;
-	//     flex-direction: column;
-	// 	text-align: center !important;
-	// }
+	#app {
+		font-family: "AraJozoor" !important;
+	}
 </style>

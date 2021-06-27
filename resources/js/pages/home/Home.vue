@@ -9,21 +9,22 @@
 			</template>
 		</v-breadcrumbs>
 
-		<v-card class="d-flex justify-center">
-			<div class="fotorama" data-allowfullscreen="true" data-autoplay="true" data-nav="thumbs" data-max-height="350" data-width="800" data-ratio="640/480" data-fit="cover">
-				<img v-for="(img,i) in sliderImages" :src="`/storage/${img}`" />
+		<div class="d-flex justify-center">
+			<div class="fotorama" data-allowfullscreen="true" data-autoplay="true" data-nav="thumbs" data-max-height="350" data-width="800" data-ratio="440/380">
+				<img v-for="(img,i) in slider_images" :src="`/storage/${img.path}`" height="120px" />
 			</div>
-		</v-card>
+		</div>
+
+		<v-divider></v-divider>
 		<v-row class="justify-center mt-2">
 			<v-col cols="6" sm="6" md="3" v-for="(department, i) in activeDepartments" :key="i">
 
 				<v-card :to="'/departments/' + department.id">
 
-					<v-card-title style="font-size:14px" class="primary white--text justify-center flex-column">
+					<v-card-text style="font-size:14px" class="primary white--text d-flex justify-center align-center flex-column">
 						<v-icon large dark>{{department.icon}}</v-icon>
-
 						{{department.name}}
-					</v-card-title>
+					</v-card-text>
 
 				</v-card>
 			</v-col>
@@ -49,10 +50,12 @@
 <script>
 	import { bus } from "../../app.js";
 	import { get } from "vuex-pathify";
-	// import Lingallery from 'lingallery';
+
 	export default {
 		data() {
 			return {
+
+
 				drawer: null,
 				fab: false,
 				color: "success",
@@ -89,39 +92,45 @@
 				]
 			};
 		},
-		components: {
-			// Lingallery
-		},
+
 
 		computed: {
-			...get(["print_title", "print_type", 'settings', "departments"]),
+			...get(["print_title", "print_type", 'settings', "departments", 'slider_images']),
 
-			sliderImages() {
 
-				if (!this.settings) return []
-				let v = this.settings.find(s => s.key == 'general')
-				if (v) {
-					return v.value.slider_images
-
-				}
-				//if (v) return v.slider_images
-				return []
-			},
 
 			activeDepartments() {
 				return this.departments.filter(d => d.state == "active");
 			}
 		},
 		mounted() {
-			this.loadFotorama();
+			if (this.slider_images.length == 0) {
+				this.$store.set('sliderImages').then(() => {
+
+					this.loadFotorama();
+
+				})
+
+			} else {
+				this.loadFotorama();
+			}
+
 		},
+
 		methods: {
 			loadFotorama() {
+
+
+
 				let script = document.createElement("script");
 				script.src =
 					"https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js";
 				document.documentElement.firstChild.appendChild(script);
+
+
+
 			},
+
 			logout() {
 				if (!confirm("Are you sure to logout?")) return;
 				this.axios.post("auth/logout").then(res => {
@@ -141,6 +150,8 @@
 		},
 
 		created() {
+			if (this.slider_images.length == 0) this.$store.set('sliderImages')
+
 			if (this.departments.length == 0) this.$store.set("departments");
 
 			this.$store.set("settings", this.settings);
@@ -253,34 +264,6 @@
 		padding: 10px;
 	}
 
-	.__registered,
-	.__planned,
-	.__waiting {
-		background-color: yellow !important;
-	}
-
-	.__confirmed {
-		background-color: rgb(157, 157, 223) !important;
-	}
-
-	.__payed,
-	.__active,
-	.__activated {
-		background-color: rgb(51, 51, 243) !important;
-		color: white !important;
-	}
-
-	.__accepted,
-	.__performed {
-		background-color: rgb(71, 250, 125) !important;
-	}
-
-	.__refused,
-	.__cancelled {
-		background-color: rgb(247, 63, 38) !important;
-		color: white !important;
-	}
-
 	// p {
 	//     color: black;
 	// }
@@ -323,13 +306,13 @@
 	::-webkit-scrollbar-thumb:hover {
 		background: #555;
 	}
-	@font-face {
-		font-family: kufy;
-		src: url("../../assets/fonts/18 Khebrat Musamim Bold.ttf");
-	}
-	#app {
-		font-family: kufy !important;
-	}
+	// @font-face {
+	// 	font-family: kufy;
+	// 	src: url("../../assets/fonts/18 Khebrat Musamim Bold.ttf");
+	// }
+	// #app {
+	// 	font-family: kufy !important;
+	// }
 	// .v-btn__content {
 	//     display: flex;
 	//     flex-direction: column;

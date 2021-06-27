@@ -12,7 +12,8 @@ const state = {
 
     print_title: "",
     print_type: "",
-    settings: [{ key: "general", value: {} }]
+    settings: [{ key: "general", value: {} }],
+    slider_images: []
 };
 
 const getters = {
@@ -30,6 +31,11 @@ const actions = {
     async setDepartmentMasters({ commit }) {
         const response = await axios.get("department-master");
         commit("SET_DEPARTMENT_MASTERS", response.data);
+    },
+
+    async setSliderImages({ commit }) {
+        const response = await axios.get("document?slider_images=true");
+        commit("SET_SLIDER_IMAGES", response.data);
     },
 
     async setUsers({ commit }) {
