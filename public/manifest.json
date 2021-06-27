@@ -1,0 +1,19 @@
+{
+    "name": "النائب خالد العتبي",
+    "short_name": "العتيبي",
+    "icons": [
+    
+      {
+        "src": "/images/start2.jpg",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+        "scope": ".",
+        "display": "standalone",
+        "background_color": "#fff",
+        "theme_color": "#000",
+        "description": "You favorite recipe app",
+        "dir": "rtl"
+  }

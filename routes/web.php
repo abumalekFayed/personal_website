@@ -6,6 +6,8 @@ use App\Models\Department;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Exports\Peoples;
+use App\Models\Document;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,17 @@ use App\Exports\Peoples;
 
 Route::get('test', function () {
 
+    $files = Document::all();
+    foreach ($files as $f) {
+        if (!Storage::exists($f->path)) continue;
+        $contents = Storage::get($f->path);
+
+        $im = imagecreatefromstring($contents);
+        $width = imagesx($im) ?? null;
+        $height = imagesy($im) ?? null;
+        $f->update(['w' => $width, 'h' => $height]);
+    }
+    return 'ooo';
 
     $cs = DB::table('departments')->where('root_id', 3)->get();
     $ts = DB::table('departments')->where('root_id', 6)->get();

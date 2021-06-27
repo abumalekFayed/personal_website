@@ -8,27 +8,29 @@ import store from "./store";
 
 //components
 import Index from "./Index.vue"; //root
-import vPage from "./components/VPage";
 import DBlock from "./components/DBlock";
-import PrintLayout from "./components/PrintLayout";
 import DDialog from "./components/DDialog";
-import DPanel from "./components/DPanel";
-import LTable from "./components/LTable";
+
 import auth from "@websanova/vue-auth/dist/v2/vue-auth.esm.js";
 import driverAuthBearer from "@websanova/vue-auth/dist/drivers/auth/bearer.esm.js";
 import driverHttpAxios from "@websanova/vue-auth/dist/drivers/http/axios.1.x.esm.js";
 import driverRouterVueRouter from "@websanova/vue-auth/dist/drivers/router/vue-router.2.x.esm.js";
 import VueMoment from "vue-moment";
+import "./registerServiceWorker";
+import dayjs from 'dayjs'
 const moment = require("moment");
 require("moment/locale/ar");
 Vue.use(VueMoment, {
     moment
 });
 
-//import Spotlight from "spotlight";
-//var spotlight = require('spotlight');
-//
-//Vue.use(Spotlight)
+Object.defineProperties(Vue.prototype, {
+    $date: {
+        get() {
+            return dayjs
+        }
+    }
+});
 
 window.jsonToFormData = require("./plugins/jsonToFormData.min.js");
 
@@ -53,8 +55,6 @@ if (token) {
 }
 window.axios = axios;
 
-//Vue.use(require("vue-moment"));
-
 Vue.use(auth, {
     plugins: {
         http: Vue.axios, // Axios
@@ -73,15 +73,10 @@ Vue.use(auth, {
     }
 });
 Vue.component("index", Index);
-Vue.component("vPage", vPage);
 Vue.component("dBlock", DBlock);
-Vue.component("printLayout", PrintLayout);
 Vue.component("dDialog", DDialog);
-Vue.component("dPanel", DPanel);
-Vue.component("lTable", LTable);
 
 Vue.config.productionTip = false;
-export const bus = new Vue();
 
 export default new Vue({
     el: "#app",

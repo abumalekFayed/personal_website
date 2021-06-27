@@ -1,15 +1,14 @@
 <template>
 	<div>
-		<div class="d-flex align-center">
 
-			<h2 class="ph" style="flex:1">
-				تواصل معنا
-			</h2>
-			<v-btn class="mx-2" fab dark color="info" to="/">
-				<v-icon size="40" color="white">mdi-home</v-icon>
-			</v-btn>
-
-		</div>
+		<v-breadcrumbs :items="titles">
+			<template v-slot:item="{ item }">
+				<v-breadcrumbs-item :to="item.href" :disabled="item.disabled">
+					<v-icon class="ml-2">{{ item.icon }}</v-icon>
+					<span>{{ item.text }}</span>
+				</v-breadcrumbs-item>
+			</template>
+		</v-breadcrumbs>
 
 		<v-card outlined>
 			<v-card-title class="info white--text">
@@ -40,9 +39,23 @@
 		data() {
 			return {
 				message: {},
+				titles: [
+					{
+						href: "/",
+						icon: "mdi-home",
+						text: "الرئيسية",
+						disabled: false
+					},
+					{
+						href: "/",
+						icon: "mdi-card-account-mail",
+						text: "تواصل معنا",
+						disabled: true
+					}
+				]
 			};
 		},
-		created() {},
+		created() { },
 		computed: {},
 		methods: {
 			saveMessage() {

@@ -4,7 +4,7 @@ namespace App\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
-class json implements CastsAttributes
+class Json implements CastsAttributes
 {
     /**
      * Cast the given value.

@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\DepartmentItemController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EmailController;
 
 /*
@@ -46,4 +47,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('dashboard', DashboardController::class);
     Route::apiResource('setting', SettingController::class);
     Route::apiResource('user', UserController::class);
+    Route::apiResource('document', DocumentController::class);
 });

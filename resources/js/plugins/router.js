@@ -17,13 +17,6 @@ function loadView(view) {
 
 const routes = [
     {
-        path: "/403",
-        hide: true,
-        name: "Error",
-        component: loadView("components/Error")
-    },
-
-    {
         path: "/",
         hide: true,
         name: "home",
@@ -31,10 +24,31 @@ const routes = [
     },
 
     {
+        path: "/about",
+        name: "about ",
+        icon: "mdi-information",
+        component: loadView("pages/about/About")
+    },
+
+    {
+        path: "/login2",
+        hide: true,
+        name: "login",
+        component: loadView("pages/auth/Login"),
+        meta: { auth: false, redirect: { name: "/" } }
+    },
+    {
+        path: "/register",
+        hide: true,
+        name: "register",
+        component: loadView("pages/auth/Register"),
+        meta: { auth: false, redirect: { name: "/" } }
+    },
+    {
         path: "/departments",
         name: "الاقسام",
         component: loadView("pages/departments/Departments"),
-        meta: { auth: { roles: ["admin"] } }
+        meta: { auth: true }
     },
 
     {
@@ -71,28 +85,6 @@ const routes = [
         icon: "mdi-cog",
         component: loadView("pages/settings/Index"),
         meta: { auth: true }
-    },
-
-    {
-        path: "/about",
-        name: "about ",
-        icon: "mdi-information",
-        component: loadView("pages/about/About")
-    },
-
-    {
-        path: "/login2",
-        hide: true,
-        name: "login",
-        component: loadView("pages/auth/Login"),
-        meta: { auth: false, redirect: { name: "/" } }
-    },
-    {
-        path: "/register",
-        hide: true,
-        name: "register",
-        component: loadView("pages/auth/Register"),
-        meta: { auth: false, redirect: { name: "/" } }
     }
 ];
 
