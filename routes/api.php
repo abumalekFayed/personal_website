@@ -30,6 +30,7 @@ Route::apiResource('department', DepartmentController::class);
 Route::apiResource('department-item', DepartmentItemController::class);
 Route::apiResource('email', EmailController::class);
 
+Route::apiResource('document', DocumentController::class);
 
 Route::prefix('auth')->group(function () {
     Route::post('register', [AuthController::class, 'register']);
@@ -47,5 +48,4 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('dashboard', DashboardController::class);
     Route::apiResource('setting', SettingController::class);
     Route::apiResource('user', UserController::class);
-    Route::apiResource('document', DocumentController::class);
 });
